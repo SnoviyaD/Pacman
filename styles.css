@@ -1,0 +1,64 @@
+body{
+	width: auto;
+	height: auto;
+	background-repeat: no-repeat;
+	background-color: black;
+	color:white;
+}
+
+p{
+	font-size: 30px;
+	font-weight: bold;
+	margin-left: 200px;
+}
+#id01{
+	width:auto;
+	height:auto;
+	margin-left:450px;
+}
+.wall,.bg,.coin,.pacmanR,.ghost1,.ghost2,.pacmanL,.pacmanU,.pacmanD{
+	width: 50px;
+	height: 50px;
+	background-image: url('wall.png');
+	display: inline-block;
+}
+
+.pacmanR{
+	background-image: url("pacman.png");
+}
+
+.pacmanL{
+	background-image: url("pacmanL.png");
+}
+
+.pacmanU{
+	background-image: url("pacmanU.png");
+}
+
+.pacmanD{
+	background-image: url("pacmanD.png");
+}
+
+.bg{
+	background-image: url("bg.png");
+}
+
+.coin{
+	background-image: url('coin.png');
+}
+
+.pacman{
+	background-image: url('pacman.png');
+}
+
+.ghost1{
+	background-image: url('ghost1.png');
+}
+
+.ghost2{
+	background-image: url('ghost2.png');
+}
+
+div{
+	margin:-2px;
+}

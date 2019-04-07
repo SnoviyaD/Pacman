@@ -1,0 +1,228 @@
+<html>
+<head>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body id="body1" onload="myGrid()">
+	 
+	 <div><p>Score: <span id="myscore"></span></p></div>
+	<div id="id01">
+	</div>
+	
+</body >
+<script>
+	var grid = [[1,1,1,1,1,1,1,1,1,1],
+				[1,3,2,2,1,2,2,2,2,1],
+				[1,2,2,2,1,1,1,2,2,1],
+				[1,2,2,2,1,2,2,2,1,1],
+				[1,1,2,2,5,2,2,2,2,1],
+				[1,4,2,2,2,1,2,1,2,1],
+				[1,2,2,1,2,1,2,1,2,1],
+				[1,2,1,2,1,1,2,2,2,1],
+				[1,2,2,2,2,2,2,1,2,1],
+				[1,1,1,1,1,1,1,1,1,1]]
+
+	var myGrid = function(){
+		document.getElementById("id01").innerHTML = "";
+		for(var i=0; i<grid.length; i=i+1)
+		{
+			for(var j=0; j<grid[i].length; j=j+1)
+			{
+				if(grid[i][j]==1)
+					document.getElementById("id01").innerHTML += "<div class='wall'></div>";
+				else if(grid[i][j]==2)
+					document.getElementById('id01').innerHTML +="<div class='coin'></div>";
+				else if(grid[i][j]==5)
+					document.getElementById('id01').innerHTML +="<div class='pacmanR'></div>";
+				else if(grid[i][j]==3)
+					document.getElementById('id01').innerHTML +="<div class='ghost1'></div>";
+				else if(grid[i][j]==4)
+					document.getElementById('id01').innerHTML +="<div class='ghost2'></div>";
+				else if(grid[i][j]==6)
+					document.getElementById('id01').innerHTML +="<div class='bg'></div>";
+				else if(grid[i][j]==7)
+					document.getElementById('id01').innerHTML +="<div class='pacmanL'></div>";
+				else if(grid[i][j]==8)
+					document.getElementById('id01').innerHTML +="<div class='pacmanU'></div>";
+				else if(grid[i][j]==9)
+					document.getElementById('id01').innerHTML +="<div class='pacmanD'></div>";
+			}
+			document.getElementById('id01').innerHTML +="<br>";
+		}
+	};
+
+	var pacmanx=4;
+	var pacmany=4;
+	var ghost1x=1;
+	var ghost1y=1;
+	var ghost2x=1;
+	var ghost2y=5;
+	var currentScore=0;
+
+	var score = document.getElementById("myscore");
+	score.innerHTML = currentScore;
+
+	document.onkeydown = function(e){
+		if(e.keyCode==37){//left
+			if(grid[pacmany][pacmanx-1]!=1)
+			{
+				grid[pacmany][pacmanx] = 6;
+				pacmanx = pacmanx-1;
+				if(grid[pacmany][pacmanx]==2)
+				{
+					currentScore +=10; 
+					score.innerHTML = currentScore;
+				}
+				grid[pacmany][pacmanx] = 7;
+				myGrid();
+			}
+		}
+		else if(e.keyCode==38){//up
+			if(grid[pacmany-1][pacmanx]!=1)
+			{
+				grid[pacmany][pacmanx] = 6;
+				pacmany = pacmany-1;
+				if(grid[pacmany][pacmanx]==2)
+				{
+					currentScore +=10; 
+					score.innerHTML = currentScore;
+				}
+				grid[pacmany][pacmanx] = 8;
+				myGrid();
+			}
+			
+		}
+		else if(e.keyCode==39){//right
+			if(grid[pacmany][pacmanx+1]!=1)
+			{
+				grid[pacmany][pacmanx] = 6;
+				pacmanx = pacmanx+1;
+				if(grid[pacmany][pacmanx]==2)
+				{
+					currentScore +=10; 
+					score.innerHTML = currentScore;
+				}
+				grid[pacmany][pacmanx] = 5;
+				myGrid();
+			}
+			
+		}
+		else if(e.keyCode==40){//down
+			if(grid[pacmany+1][pacmanx]!=1)
+			{
+				grid[pacmany][pacmanx] = 6;
+				pacmany = pacmany+1;
+				if(grid[pacmany][pacmanx]==2)
+				{
+					currentScore +=10; 
+					score.innerHTML = currentScore;
+				}
+				grid[pacmany][pacmanx] = 9;
+				myGrid();
+			}
+		}
+	}
+
+	var ghost1RandomWalk = function(){
+		
+		if(pacmanx==ghost1x && pacmany==ghost1y)
+		{
+			clearInterval(x);
+			document.getElementById("body1").innerHTML = "";
+			document.getElementById("body1").style.background="url('gameover.jpg') no-repeat center black";
+		}
+					
+		var direction = Math.floor(Math.random()*10);
+
+		if(direction<5){//LtoR
+
+			if((grid[ghost1y][ghost1x+1]) != 1 && (grid[ghost1y][ghost1x+1] !=4))
+			{
+				grid[ghost1y][ghost1x]= 2;
+				ghost1x = ghost1x+1;
+				grid[ghost1y][ghost1x]= 3;
+				myGrid();
+
+			}
+			else if( (grid[ghost1y][ghost1x-1]!=1) && (grid[ghost1y][ghost1x-1]!=4))
+			{
+				grid[ghost1y][ghost1x]= 2;
+				ghost1x = ghost1x-1;
+				grid[ghost1y][ghost1x]= 3;
+				myGrid();
+			}
+
+		}
+		else{//UtoD
+			if((grid[ghost1y+1][ghost1x]) != 1 && (grid[ghost1y+1][ghost1x] != 4))
+			{
+				grid[ghost1y][ghost1x]= 2;
+				ghost1y = ghost1y+1;
+				grid[ghost1y][ghost1x]= 3;
+				myGrid();
+			}
+			else if((grid[ghost1y-1][ghost1x] !=1) && (grid[ghost1y-1][ghost1x] !=4))
+			{
+				grid[ghost1y][ghost1x]= 2;
+				ghost1y = ghost1y-1;
+				grid[ghost1y][ghost1x]= 3;
+				myGrid();
+			}
+		}
+	};
+
+
+	var ghost2RandomWalk = function(){
+		
+		if(pacmanx==ghost2x && pacmany==ghost2y)
+		{
+			clearInterval(x);
+			document.getElementById("body1").innerHTML = "";
+			document.getElementById("body1").style.background="url('gameover.jpg') no-repeat center black";
+		}
+					
+		var direction = Math.floor(Math.random()*10);
+
+		if(direction<5){//LtoR
+
+			if((grid[ghost2y][ghost2x+1] != 1) && (grid[ghost2y][ghost2x+1]!= 3))
+			{
+				grid[ghost2y][ghost2x]= 2;
+				ghost2x = ghost2x+1;
+				grid[ghost2y][ghost2x]= 4;
+				myGrid();
+
+			}
+			else if( (grid[ghost2y][ghost2x-1]!=1) && (grid[ghost2y][ghost2x-1] != 3))
+			{
+				grid[ghost2y][ghost2x]= 2;
+				ghost2x = ghost2x-1;
+				grid[ghost2y][ghost2x]= 4;
+				myGrid();
+			}
+
+		}
+		else{//UtoD
+			if((grid[ghost2y+1][ghost2x] != 1) && (grid[ghost2y+1][ghost2x] != 3))
+			{
+				grid[ghost2y][ghost2x]= 2;
+				ghost2y = ghost2y+1;
+				grid[ghost2y][ghost2x]= 4;
+				myGrid();
+			}
+			else if((grid[ghost2y-1][ghost2x] !=1) && (grid[ghost2y-1][ghost2x] != 3))
+			{
+				grid[ghost2y][ghost2x]= 2;
+				ghost2y = ghost2y-1;
+				grid[ghost2y][ghost2x]= 4;
+				myGrid();
+			}
+		}
+	};
+
+	var x = setInterval(function(){
+  		ghost1RandomWalk();
+  		ghost2RandomWalk();
+  	}, 200);
+
+</script>
+</html>
